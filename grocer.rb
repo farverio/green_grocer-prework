@@ -16,48 +16,23 @@ def consolidate_cart(cart)
   output_hash
 end
 
-def apply_coupons(cart, coupons)
-  output_hash = {}
-  previous_coupon = ""
-  
-  if coupons.length != 0
-    coupon_num = 0
-    coupons.each do |coupon| 
-      if coupon[:item] != previous_coupon
-        coupon_num = 0 
-      end
-      
-      cart.each do |cart_item, details|
-        clearance_flag = true
-        output_hash[cart_item] = details
-        
-        if coupon[:item] == cart_item
-          if coupon[:num] > details[:count]
-            coupon_count = details[:count]
-          elsif coupon[:num] < details[:count]
-            coupon_count = coupon[:num]
-            clearance_flag = false
-          else
-            coupon_count = coupon[:num]
-          end
-          
-          output_hash["#{cart_item} W/COUPON"] = {
-            price: coupon[:cost],
-            clearance: clearance_flag,
-            count: coupon_num += 1
-          }
-          
-          output_hash[cart_item][:count] -= coupon_count
-        end
-      end
-      previous_coupon = coupon[:item]
-    end
-  else
-    output_hash = cart
-  end
-  
-  output_hash
-end
+def apply_coupons(cart:[], coupons:[])
+-  # code here	+  result = {}
++  # code here#
++  cart.each do |food, info|
++    coupons.each do |coupon|
++      if food == coupon[:item] && info[:count] >= coupon[:num]
++        info[:count] =  info[:count] - coupon[:num]
++        if result["#{food} W/COUPON"]
++          result["#{food} W/COUPON"][:count] += 1
++        else
++          result["#{food} W/COUPON"] = {:price => coupon[:cost], :clearance => info[:clearance], :count => 1}
++        end
++      end
++    end
++    result[food] = info
++  end
++  result
 
 def apply_clearance(cart)
   cart.map do |item, details|
