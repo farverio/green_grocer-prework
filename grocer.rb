@@ -18,11 +18,15 @@ end
 
 def apply_coupons(cart, coupons)
   output_hash = {}
+  previous_coupon = ""
   
   if coupons.length != 0
     coupon_num = 0
     coupons.each do |coupon| 
+      if coupon[:]
       cart.each do |cart_item, details|
+        
+        
         clearance_flag = true
         output_hash[cart_item] = details
         
