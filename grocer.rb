@@ -16,7 +16,7 @@ def consolidate_cart(cart)
   output_hash
 end
 
-def apply_coupons(cart:[], coupons:[])
+def apply_coupons(cart, coupons)
   result = {}
   cart.each do |food, info|
     coupons.each do |coupon|
