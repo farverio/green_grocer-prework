@@ -23,10 +23,11 @@ def apply_coupons(cart, coupons)
   if coupons.length != 0
     coupon_num = 0
     coupons.each do |coupon| 
-      if coupon[:]
+      if coupon[:item] != previous_coupon
+        coupon_num = - 
+      end
+      
       cart.each do |cart_item, details|
-        
-        
         clearance_flag = true
         output_hash[cart_item] = details
         
@@ -49,6 +50,7 @@ def apply_coupons(cart, coupons)
           output_hash[cart_item][:count] -= coupon_count
         end
       end
+      previous_coupon = coupon[:item]
     end
   else
     output_hash = cart
