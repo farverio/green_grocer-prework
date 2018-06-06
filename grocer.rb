@@ -24,7 +24,7 @@ def apply_coupons(cart, coupons)
     coupon_num = 0
     coupons.each do |coupon| 
       if coupon[:item] != previous_coupon
-        coupon_num = - 
+        coupon_num = 0 
       end
       
       cart.each do |cart_item, details|
